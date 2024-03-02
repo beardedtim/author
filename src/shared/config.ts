@@ -5,6 +5,7 @@ const config = {
     name: getEnv("SERVICE_NAME", "author"),
     port: getEnv("PORT", 5000),
     logLevel: getEnv("LOG_LEVEL", "trace"),
+    version: getEnv("VERSION", "0.0.0"),
   },
   database: {
     host: getEnv("DB_HOST"),
