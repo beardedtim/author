@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e;
+
+DATE=$(date -d "today" +"%Y%m%d%H%M")
+
+
+cat > migrations/$DATE-$1.ts << EOL
+/**
+    migration for $1
+*/
+import { Kysely } from 'kysely'
+
+export async function up(db: Kysely<any>): Promise<void> {
+  // Migration code
+}
+
+export async function down(db: Kysely<any>): Promise<void> {
+  // Migration code
+}
+EOL

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e;
+
+export DATABASE_URL="postgres://overlord:ou812@0.0.0.0:9999/bible_study"
+
+npx kysely-codegen

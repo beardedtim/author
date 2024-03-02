@@ -1,0 +1,22 @@
+version: '3'
+services:
+  database:
+    image: postgres:16.2
+    environment:
+      POSTGRES_USER: overlord
+      POSTGRES_PASSWORD: ou812
+      POSTGRES_DB: author
+    ports:
+      - "9999:5432"
+  
+  cache:
+    image: redis:7.2
+    ports:
+      - "9998:6379"
+  
+  graph:
+    image: arangodb:3.11
+    ports:
+      - "9997:8529"
+    environment:
+      ARANGO_ROOT_PASSWORD: ou812
