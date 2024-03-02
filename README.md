@@ -50,6 +50,30 @@ const canEditBlogPost = await fetch(
   .then(({ data }) => data);
 ```
 
+## Examples
+
+### Graph
+
+### Graph State
+
+Let's say that we have a graph with the given state
+
+![graph image](./artifacts/Screenshot%20from%202024-03-02%2016-05-35.png)
+
+We can ask it:
+
+_**Do I have permission to delete ead0e788-648a-458e-b4b3-fb9e442694e9**_
+
+![I can delete that resource](./artifacts/Screenshot%20from%202024-03-02%2016-07-16.png)
+
+_**Do I have permission to delete a78a9d69-927c-49a8-904f-ea675227057b**_
+
+![Since I have only reads, I cannot delete that](./artifacts/Screenshot%20from%202024-03-02%2016-08-26.png)
+
+_**Do I have permission to read a78a9d69-927c-49a8-904f-ea675227057b**_
+
+![I do, since I have that permission in the graph](./artifacts/Screenshot%20from%202024-03-02%2016-09-28.png)
+
 ## Development
 
 ```sh
