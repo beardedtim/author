@@ -95,5 +95,5 @@ export const canActorPerformActionOnResource = runInContext(
     // resource
     return allowed;
   },
-  "check-permissions"
+  "check-permissions-use-case"
 );

@@ -2,6 +2,7 @@ import { NewResource, Resource } from "./dtos";
 import { Database } from "arangojs";
 import * as GraphUseCases from "@app/use-cases/graph-db";
 import Repository from "./repo";
+import { runInContext } from "@app/shared/utils";
 export interface CreateResourceRequest {
   data: NewResource;
   repositories: {
@@ -17,15 +18,19 @@ export interface GetResourceByIdRequest {
   };
 }
 
-export const create = async (
-  request: CreateResourceRequest
-): Promise<Resource> => {
-  const resource = await request.repositories.Resource.add(request.data);
+export const create = runInContext(
+  async (request: CreateResourceRequest): Promise<Resource> => {
+    const resource = await request.repositories.Resource.add(request.data);
 
-  await GraphUseCases.addResource(request.graph, resource._id);
+    await GraphUseCases.addResource(request.graph, resource._id);
 
-  return resource;
-};
+    return resource;
+  },
+  "create-resource-use-case"
+);
 
-export const getById = (request: GetResourceByIdRequest): Promise<Resource> =>
-  request.repositories.Resource.getById(request.data);
+export const getById = runInContext(
+  (request: GetResourceByIdRequest): Promise<Resource> =>
+    request.repositories.Resource.getById(request.data),
+  "get-resource-by-id-use-case"
+);
