@@ -10,21 +10,24 @@ import * as GraphUseCases from "@app/use-cases/graph-db";
 import { db as graphDb } from "@app/connections/graph";
 import { cache } from "@app/connections/cache";
 import server from "@app/server";
-import config from "./shared/config";
-
+import config from "@app/shared/config";
+import { inContext } from "@app/shared/utils";
 import { Server } from "http";
+import { runInContext } from "@app/shared/utils";
 
 const init = async () => {
   Log.debug("Initting the system");
-  const result = await migrator.migrateUp();
+  const result = await inContext(
+    () => migrator.migrateUp(),
+    "migrate-sql-init"
+  );
 
   Log.debug({ result }, "Migrated SQL database");
 
-  await GraphUseCases.migrate(graphDb);
-  Log.debug("Migrated Graph Database");
+  await inContext(() => GraphUseCases.migrate(graphDb), "migrate-graph");
 };
 
-const main = async () => {
+const main = runInContext(async () => {
   Log.debug("Starting the system");
   const port = config.general.port;
 
@@ -40,7 +43,7 @@ const main = async () => {
 
   let instance: Server;
 
-  const shutdown = async (err?: Error) => {
+  const shutdown = runInContext(async (err?: Error) => {
     Log.trace({ err }, "Getting asking to shutdown gracefully");
 
     try {
@@ -50,23 +53,33 @@ const main = async () => {
        * the connections
        */
       if (instance) {
-        await new Promise((res, rej) => {
-          instance.close((err) => {
-            if (err) {
-              return rej(err);
-            }
+        inContext(async () => {
+          await new Promise((res, rej) => {
+            instance.close((err) => {
+              if (err) {
+                return rej(err);
+              }
 
-            res(void 0);
+              res(void 0);
+            });
           });
-        });
+        }, "database-shutdown");
       }
 
       /**
        * Close connections
        */
-      await sqlDb.destroy();
-      await cache.disconnect();
-      await graphDb.close();
+      await inContext(async () => {
+        await sqlDb.destroy();
+      }, "sql-shutdown");
+
+      await inContext(async () => {
+        await cache.disconnect();
+      }, "cache-shutdown");
+
+      await inContext(async () => {
+        await graphDb.close();
+      }, "graph-shutdown");
 
       Log.trace("Successfully shutdown system gracefully");
 
@@ -80,7 +93,7 @@ const main = async () => {
       Log.fatal({ err: shutdown }, "Error trying to shutdown gracefully");
       process.exit(1);
     }
-  };
+  }, "shutdown");
 
   process
     .on("SIGTERM", () => {
@@ -93,10 +106,14 @@ const main = async () => {
     .on("unhandledRejection", shutdown);
 
   server.listen(port, () => Log.trace({ port }, "Listening"));
-};
+}, "main");
 
-init()
-  .then(main)
-  .catch((err) => {
-    Log.fatal({ err }, "Error during startup");
-  });
+inContext(
+  () =>
+    init()
+      .then(main)
+      .catch((err) => {
+        Log.fatal({ err }, "Error during startup");
+      }),
+  "init-system"
+);
