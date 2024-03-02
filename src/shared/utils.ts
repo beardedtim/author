@@ -34,3 +34,15 @@ export const allowedToFailWhen = async (
     }
   }
 };
+
+export const startTimer = () => {
+  const start = process.hrtime();
+
+  return {
+    timeElapsed: () => {
+      const end = process.hrtime(start);
+
+      return end[0] * 1000 + end[1] / 1000000;
+    },
+  };
+};

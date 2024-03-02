@@ -8,7 +8,7 @@ import { migrator } from "@app/connections/database/migrate";
 import * as GraphUseCases from "@app/use-cases/graph-db";
 import { db as graphDb } from "@app/connections/graph";
 import server from "@app/server";
-import { getEnv } from "@app/shared/env";
+import config from "./shared/config";
 
 const init = async () => {
   Log.debug("Initting the system");
@@ -22,7 +22,7 @@ const init = async () => {
 
 const main = async () => {
   Log.debug("Starting the system");
-  const port = getEnv("PORT", 5000);
+  const port = config.general.port;
 
   const file = JSON.parse(
     await fs.readFile(path.resolve(__dirname, "..", "openapi.json"), "utf8")

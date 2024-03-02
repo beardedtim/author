@@ -1,6 +1,7 @@
 import Pino from "pino";
+import config from "./config";
 
 export default Pino({
   serializers: Pino.stdSerializers,
-  level: process.env.LOG_LEVEL || "trace",
+  level: config.general.logLevel,
 });

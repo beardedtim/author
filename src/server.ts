@@ -3,7 +3,7 @@ import LogMiddleware from "pino-http";
 import Cors from "cors";
 
 import Log from "@app/shared/log";
-import router from "./routes";
+import v1 from "./v1";
 
 const server = express();
 
@@ -15,6 +15,6 @@ server
       data: "healthy",
     });
   })
-  .use("/api/v1", router);
+  .use("/api/v1", v1);
 
 export default server;

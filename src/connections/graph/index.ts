@@ -1,10 +1,10 @@
-import { getEnv } from "@app/shared/env";
+import config from "@app/shared/config";
 import { Database } from "arangojs";
 
 export const db = new Database({
   auth: {
-    username: getEnv("GRAPH_USER"),
-    password: getEnv("GRAPH_PASS"),
+    username: config.graph.username,
+    password: config.graph.password,
   },
-  url: `http://${getEnv("GRAPH_HOST")}:${getEnv("GRAPH_PORT")}`,
+  url: `http://${config.graph.host}:${config.graph.port}`,
 });

@@ -1,15 +1,15 @@
 import { DB } from "kysely-codegen";
 import { Pool } from "pg";
 import { Kysely, PostgresDialect } from "kysely";
-import { getEnv } from "@app/shared/env";
+import config from "@app/shared/config";
 
 const dialect = new PostgresDialect({
   pool: new Pool({
-    database: getEnv("DB_NAME"),
-    host: getEnv("DB_HOST"),
-    user: getEnv("DB_USER"),
-    port: getEnv("DB_PORT"),
-    password: getEnv("DB_PASS"),
+    database: config.database.name,
+    host: config.database.host,
+    user: config.database.user,
+    port: config.database.port,
+    password: config.database.password,
     max: 10,
   }),
 });
