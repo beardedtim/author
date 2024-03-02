@@ -1,0 +1,576 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Author",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "API"
+    },
+    {
+      "name": "API/V1"
+    },
+    {
+      "name": "API/V1/Permissions"
+    },
+    {
+      "name": "API/V1/Actors"
+    },
+    {
+      "name": "API/V1/Resources"
+    },
+    {
+      "name": "API/V1/Relationships"
+    },
+    {
+      "name": "Internal"
+    }
+  ],
+  "paths": {
+    "/healthcheck": {
+      "get": {
+        "summary": "Healthcheck",
+        "x-apidog-folder": "Internal",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "healthcheck",
+        "tags": [
+          "Internal"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "string",
+                      "description": "Healthy or not"
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "data"
+                  ],
+                  "required": [
+                    "data"
+                  ],
+                  "x-apidog-ignore-properties": []
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "error"
+                  ],
+                  "required": [
+                    "error"
+                  ],
+                  "x-apidog-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/473568/apis/api-5847859-run",
+        "security": []
+      }
+    },
+    "/api/v1/permissions/{actor}/{action}/{resource}": {
+      "get": {
+        "summary": "Check Permission",
+        "x-apidog-folder": "API/V1/Permissions",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "URL Parameters:\n\n/:actor_id/:action_name/:resource_id",
+        "operationId": "checkPermission",
+        "tags": [
+          "API/V1/Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "actor",
+            "in": "path",
+            "description": "The UUID of the Actor we want to check permissions for",
+            "required": true,
+            "example": "{% faker datatype.uuid %}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "description": "The Actionn we want to check if the Actor can perform",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resource",
+            "in": "path",
+            "description": "The UUID of the Resource we want to check permissions for",
+            "required": true,
+            "example": "{% faker datatype.uuid %}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "boolean",
+                      "description": "If the Actor has the Permission to perform Action on the given Resource"
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "data"
+                  ],
+                  "required": [
+                    "data"
+                  ],
+                  "x-apidog-ignore-properties": []
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message"
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "error"
+                  ],
+                  "required": [
+                    "error"
+                  ],
+                  "x-apidog-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/473568/apis/api-5847860-run",
+        "security": []
+      }
+    },
+    "/api/v1/actors": {
+      "post": {
+        "summary": "Create Actor",
+        "x-apidog-folder": "API/V1/Actors",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "createActor",
+        "tags": [
+          "API/V1/Actors"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The Actors Human-readable name"
+                  }
+                },
+                "x-apidog-orders": [
+                  "name"
+                ],
+                "required": [
+                  "name"
+                ],
+                "x-apidog-ignore-properties": []
+              },
+              "example": {
+                "name": "Tim Roberts"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apidog-orders": [
+                        "_id",
+                        "name"
+                      ],
+                      "required": [
+                        "_id",
+                        "name"
+                      ],
+                      "x-apidog-ignore-properties": []
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "data"
+                  ],
+                  "required": [
+                    "data"
+                  ],
+                  "x-apidog-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Basic Example",
+                    "value": {
+                      "data": {
+                        "_id": "6ecce418-37d9-4d93-a8f8-07f8d939c10a",
+                        "name": "odio laudantium est"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/473568/apis/api-5847899-run",
+        "security": []
+      }
+    },
+    "/api/v1/resources": {
+      "post": {
+        "summary": "Create Resource",
+        "x-apidog-folder": "API/V1/Resources",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "createResource",
+        "tags": [
+          "API/V1/Resources"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Human-readable Name of Resource"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Human-readable Description of Resource"
+                  }
+                },
+                "x-apidog-orders": [
+                  "name",
+                  "description"
+                ],
+                "required": [
+                  "name",
+                  "description"
+                ],
+                "x-apidog-ignore-properties": []
+              },
+              "example": {
+                "name": "Application",
+                "description": "Main application"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apidog-orders": [
+                        "_id",
+                        "name",
+                        "description"
+                      ],
+                      "required": [
+                        "_id",
+                        "name",
+                        "description"
+                      ],
+                      "x-apidog-ignore-properties": []
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "data"
+                  ],
+                  "required": [
+                    "data"
+                  ],
+                  "x-apidog-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Basic Example",
+                    "value": {
+                      "data": {
+                        "_id": "2936d7f5-c1af-4eaa-90a4-caae4e74a6de",
+                        "name": "esse culpa magnam",
+                        "description": "Cupiditate dolorem fugiat aspernatur accusantium error labore accusantium. Suscipit labore quidem. Delectus aliquam reiciendis officiis delectus libero. Nam quisquam perferendis. Consequuntur eaque similique sequi animi. Officiis repudiandae expedita eum minus perferendis modi ratione."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/473568/apis/api-5847900-run",
+        "security": []
+      }
+    },
+    "/api/v1/relationships": {
+      "post": {
+        "summary": "Create Relationship",
+        "x-apidog-folder": "API/V1/Relationships",
+        "x-apidog-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "createRelationship",
+        "tags": [
+          "API/V1/Relationships"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "actor": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "read",
+                      "delete",
+                      "edit"
+                    ],
+                    "x-apidog": {
+                      "enumDescriptions": {
+                        "read": "",
+                        "delete": "",
+                        "edit": ""
+                      }
+                    }
+                  },
+                  "resource": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "x-apidog-orders": [
+                  "actor",
+                  "action",
+                  "resource"
+                ],
+                "required": [
+                  "actor",
+                  "action",
+                  "resource"
+                ],
+                "x-apidog-ignore-properties": []
+              },
+              "example": {
+                "actor": "47f91ae8-a86d-4bb8-9799-a8449404c787",
+                "resource": "2536748e-f609-4bed-9eaf-b2e04fc1e161",
+                "relationship": "edits"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "_key": {
+                          "type": "string"
+                        },
+                        "_rev": {
+                          "type": "string"
+                        },
+                        "new": {
+                          "type": "object",
+                          "properties": {
+                            "_key": {
+                              "type": "string"
+                            },
+                            "_id": {
+                              "type": "string"
+                            },
+                            "_from": {
+                              "type": "string"
+                            },
+                            "_to": {
+                              "type": "string"
+                            },
+                            "_rev": {
+                              "type": "string"
+                            },
+                            "relationship": {
+                              "type": "string"
+                            }
+                          },
+                          "x-apidog-orders": [
+                            "_key",
+                            "_id",
+                            "_from",
+                            "_to",
+                            "_rev",
+                            "relationship"
+                          ],
+                          "required": [
+                            "_key",
+                            "_id",
+                            "_from",
+                            "_to",
+                            "_rev",
+                            "relationship"
+                          ],
+                          "x-apidog-ignore-properties": []
+                        }
+                      },
+                      "x-apidog-orders": [
+                        "_id",
+                        "_key",
+                        "_rev",
+                        "new"
+                      ],
+                      "required": [
+                        "_id",
+                        "_key",
+                        "_rev",
+                        "new"
+                      ],
+                      "x-apidog-ignore-properties": []
+                    }
+                  },
+                  "x-apidog-orders": [
+                    "data"
+                  ],
+                  "required": [
+                    "data"
+                  ],
+                  "x-apidog-ignore-properties": []
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Basic Example",
+                    "value": {
+                      "data": {
+                        "_id": "relationship/756",
+                        "_key": "756",
+                        "_rev": "_he_p6fy---",
+                        "new": {
+                          "_key": "756",
+                          "_id": "relationship/756",
+                          "_from": "actor/a6078ff8-c2ee-9230-277d-642bfce797fe",
+                          "_to": "resource/30604893-ff95-41fd-8c71-e6e0b447a79f",
+                          "_rev": "_he_p6fy---",
+                          "relationship": "delete"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apidog": "https://apidog.com/web/project/473568/apis/api-5847901-run",
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local Dev"
+    }
+  ]
+}

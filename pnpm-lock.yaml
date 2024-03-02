@@ -29,6 +29,9 @@ dependencies:
   pino-http:
     specifier: ^9.0.0
     version: 9.0.0
+  swagger-ui-express:
+    specifier: ^5.0.0
+    version: 5.0.0(express@4.18.3)
   tsconfig-paths:
     specifier: ^4.2.0
     version: 4.2.0
@@ -52,6 +55,9 @@ devDependencies:
   '@types/pino-http':
     specifier: ^5.8.4
     version: 5.8.4
+  '@types/swagger-ui-express':
+    specifier: ^4.1.6
+    version: 4.1.6
   dotenv-flow:
     specifier: ^4.1.0
     version: 4.1.0
@@ -232,6 +238,13 @@ packages:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
       '@types/node': 20.11.24
+    dev: true
+
+  /@types/swagger-ui-express@4.1.6:
+    resolution: {integrity: sha512-UVSiGYXa5IzdJJG3hrc86e8KdZWLYxyEsVoUI4iPXc7CO4VZ3AfNP8d/8+hrDRIqz+HAaSMtZSqAsF3Nq2X/Dg==}
+    dependencies:
+      '@types/express': 4.17.21
+      '@types/serve-static': 1.15.5
     dev: true
 
   /abbrev@1.1.1:
@@ -1620,6 +1633,20 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
     dev: true
+
+  /swagger-ui-dist@5.11.8:
+    resolution: {integrity: sha512-IfPtCPdf6opT5HXrzHO4kjL1eco0/8xJCtcs7ilhKuzatrpF2j9s+3QbOag6G3mVFKf+g+Ca5UG9DquVUs2obA==}
+    dev: false
+
+  /swagger-ui-express@5.0.0(express@4.18.3):
+    resolution: {integrity: sha512-tsU9tODVvhyfkNSvf03E6FAk+z+5cU3lXAzMy6Pv4av2Gt2xA0++fogwC4qo19XuFf6hdxevPuVCSKFuMHJhFA==}
+    engines: {node: '>= v0.10.32'}
+    peerDependencies:
+      express: '>=4.0.0 || >=5.0.0-beta'
+    dependencies:
+      express: 4.18.3
+      swagger-ui-dist: 5.11.8
+    dev: false
 
   /thread-stream@2.4.1:
     resolution: {integrity: sha512-d/Ex2iWd1whipbT681JmTINKw0ZwOUBZm7+Gjs64DHuX34mmw8vJL2bFAaNacaW72zYiTJxSHi5abUuOi5nsfg==}

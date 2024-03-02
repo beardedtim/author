@@ -21,7 +21,7 @@ export interface GetActorByIdRequest {
 export const create = async (request: CreateActorRequest): Promise<Actor> => {
   const actor = await request.repositories.Actor.add(request.data);
 
-  const result = await GraphUseCases.addActor(request.graph, actor._id);
+  await GraphUseCases.addActor(request.graph, actor._id);
 
   return actor;
 };
